@@ -1,0 +1,59 @@
+# - requirement.txt  -  GPU: tensorflow-gpu, CPU: tensorflow
+# - If you use the GPU version, you need to install some additional applications(CUDA,cuDNN).
+# GpuMemoryFraction: The utilization ratio of GPU memory.
+# TrainSetPath and TestSetPath: The local absolute path of your training and testing set.
+# LabelRegex: Default matching apple_20181010121212.jpg file.
+# - The Default is (.*?)_
+# MaxTextLenth: the max length of the label
+# IMG_W: The width of the image
+# IMG_H: The height of the image
+# ModelName: the name of the model to be saved.
+# Alphabet: the character in labels. Default string.digits + string.ascii_uppercase + string.ascii_lowercase
+System:
+  GpuMemoryFraction: 0.7
+  TrainSetPath: 'trainset/path'
+  TestSetPath: 'testset/path'
+  LabelRegex: '_([0-9]{4}).jpg'
+  MaxTextLenth: 6
+  IMG_W: 52
+  IMG_H: 20
+  ModelName: 'model_name.h5'
+#  Alphabet: '0123456789abcdefghijklmnopqrstuvwxyz'
+  Alphabet: '0123456789'
+
+# RNNSize:
+# - The recommended configuration is 64
+# Dropout:
+# - The recommended configuration is 0.5
+NeuralNet:
+  RNNSize: 64
+  Dropout: 0.25
+
+# EarlyStoping:
+# - monitor: quantity to be monitored. has value 'loss', 'val_loss'
+# - patience: number of epochs with no improvement after which training
+#             will be stopped. default 10.
+# - mode: one of {auto, min, max}.
+#         In `min` mode, training will stop when the quantity
+#         monitored has stopped decreasing;
+#         in `max` mode it will stop when the quantity
+#         monitored has stopped increasing;
+#         in `auto` mode, the direction is automatically inferred
+#         from the name of the monitored quantity.
+# - baseline: Baseline value for the monitored quantity to reach.
+#            Training will stop if the model doesn't show improvement
+#            over the baseline.
+# Epochs: Integer. Number of epochs to train the model.
+# BatchSize: Integer. Training batch size
+# TestBatchSize: Integer. Test batch size
+# TestSetNum: Integer. Limit test set number.
+TrainParam:
+  EarlyStoping:
+    monitor: 'val_loss'
+    patience: 10
+    mode: 'auto'
+    baseline: 0.02
+  Epochs: 2
+  BatchSize: 128
+  TestBatchSize: 200
+  TestSetNum: 1000
